@@ -88,12 +88,6 @@ app.use(
     }),
 );
 
-// Config middleware for Passport Login
-require('./utils/passport');
-app.use(passport.initialize());
-// Have to add session for get info from gg to this server express, Have to install express-session with this
-app.use(passport.session());
-
 // Routes
 route(app);
 // Handle unfound Route
