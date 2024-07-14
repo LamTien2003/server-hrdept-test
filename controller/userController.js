@@ -65,7 +65,11 @@ exports.editUser = catchAsync(async (req, res, next) => {
 });
 
 exports.exportExcel = catchAsync(async (req, res, next) => {
-    const allUsers = await User.find({});
+    const usersQuery = new APIFeatures(User.find(), req.query)
+        .search(['email', 'phoneNumber', 'firstName', 'lastName'], 'searchText')
+        .filter()
+        .paginate();
+    const users = await usersQuery.query;
 
     const workbook = new excelJS.Workbook();
     const worksheet = workbook.addWorksheet('Users');
@@ -79,7 +83,7 @@ exports.exportExcel = catchAsync(async (req, res, next) => {
         { header: 'Role', key: 'role', width: 10 },
     ];
 
-    allUsers.forEach((user) => {
+    users.forEach((user) => {
         const data = {
             firstName: user.firstName,
             lastName: user.lastName,
