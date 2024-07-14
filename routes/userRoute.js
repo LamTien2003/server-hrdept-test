@@ -15,7 +15,7 @@ const router = express.Router();
 //     filesMiddleware.resizePhoto('users'),
 //     userController.changeMe,
 // );
-
+router.get('/downloadExcel', userController.exportExcel);
 router.patch(
     '/:userId',
     filesMiddleware.uploadSinglePhoto('image'),
